@@ -48,7 +48,7 @@ async def puppy(ctx):
 
     try:
         url = puppy_api.random_pupper();
-        await ctx.send(url);
+        # await ctx.send(url);
 
         # Choose a random rating unaffected by state, unique to photo
         state = random.getstate();
@@ -61,7 +61,12 @@ async def puppy(ctx):
 
         # Format into a usable message and send it
         random_msg = puppy_api.random_rating(rating_str);
-        await ctx.send(random_msg);
+        # await ctx.send(random_msg);
+
+        e = discord.Embed(title=rating_str, description=random_msg);
+        e.set_image(url=url);
+
+        await ctx.send(embed=e);
         
     
     except Exception as e:
