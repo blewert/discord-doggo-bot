@@ -10,8 +10,7 @@ It doesn't really serve a purpose, but I have been wanting to create some materi
 Here are some rough steps for you to follow the installation of this project. This assumes you already have created a application + bot on your [Discord Developers](https://discord.com/developers/applications/) portal -- if not, do that first, because you'll need the bot's token to use it (the bot only requires read + send message scopes).
 1) Install Python (>= 3.6.0) on your local machine. 
 2) Download / clone this repo (`git clone https://github.com/blewert/discord-doggo-bot`)
-3) Navigate to this directory and install dependencies with pip, e.g. `py -m pip install -r requirements.txt`
-    a) Currently there is only one requirement for this project, `discord.py@1.7.1`
+3) Navigate to this directory and install dependencies with pip, e.g. `py -m pip install -r requirements.txt`. Currently there is only one requirement for this project, `discord.py@1.7.1`.
 4) Create a folder in the project folder called `auth`, if it doesn't exist already. Inside `auth/`, make the following files:
    1) `.flickr_api_key`, i.e. `auth/.flickr_api_key`.
    2) `.owner_id` i.e. `auth/.owner_id`.
