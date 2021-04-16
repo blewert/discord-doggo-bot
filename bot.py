@@ -6,9 +6,11 @@
 
 import os
 import discord
+import random
 from discord.ext import commands
 
 from flickr import FlickrPhotosAPI
+from puppers import PuppersAPI
 
 def get_token_from_file(filename):
 
@@ -26,13 +28,8 @@ bot_token = get_token_from_file(".token");
 owner_id = get_token_from_file(".owner_id");
 flickr_token = get_token_from_file(".flickr_api_key");
 
-# Get flickr api search instance
-flickr_api = FlickrPhotosAPI(flickr_token);
-
-# Do a random search for something
-flickr_api.random_search(["corgi", "dog"]);
-
-
+# Get puppy api
+puppy_api = PuppersAPI(flickr_token);
 
 # Make new client
 bot = commands.Bot(command_prefix='!');
@@ -49,8 +46,28 @@ async def puppy(ctx):
     if ctx.author.bot:
         return;
 
-    # Otherwise! Do this
-    return await ctx.send("hello");
+    try:
+        url = puppy_api.random_pupper();
+        await ctx.send(url);
+
+        # Choose a random rating unaffected by state, unique to photo
+        state = random.getstate();
+        random.seed(url);
+        rating = random.randrange(11, 15);
+        random.setstate(state);
+
+        # Format into string
+        rating_str = f"{rating}/10"
+
+        # Format into a usable message and send it
+        random_msg = puppy_api.random_rating(rating_str);
+        await ctx.send(random_msg);
+        
+    
+    except Exception as e:
+        await ctx.send(puppy_api.random_error());
+        await ctx.send(f"```\n{puppy_api.last_url}\n{puppy_api.last_response}\n```");
+
 
 @bot.command()
 async def quit(ctx):
@@ -61,7 +78,7 @@ async def quit(ctx):
 
     # Otherwise:
     print("Quit command found! Closing!");
-    await ctx.send("Leaving!");
+    await ctx.send("Leaving :person_running:");
     await ctx.bot.close();
 
 # Run ittttttt
