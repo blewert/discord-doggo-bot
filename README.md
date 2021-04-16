@@ -44,6 +44,7 @@ You can then interact with the bot in your server. The following is a list of co
 | Command | Description |
 | ------- | ----------- |
 | `!puppy` | Finds a random dog picture and sends it to the channel the user requested it on. |
+| `!puppies <n>` | Executes `!puppy` a total of `n` times. |
 | `!quit` | Exits the process hosting the bot, will only work for users whose user id matches the one found in `auth/.owner_id`. |
 
 

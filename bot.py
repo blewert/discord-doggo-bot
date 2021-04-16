@@ -32,6 +32,26 @@ async def on_ready() -> None:
 
 
 @bot.command()
+async def puppies(ctx, arg=None) -> None:
+
+    # No arguments? Show error
+    if arg == None:
+        return await ctx.send(f"You gotta give me a number! Like: `!puppies 3`. The number must between 1 and 5 ok?");
+
+    # Nae numeric? Error message ok
+    if not arg.isnumeric():
+        return await ctx.send(f"Sorry but `{arg}` doesn't look like a number to me. Pls give me a number between 1 and 5.");
+
+    # Parse num, clamp to valid range
+    num = int(arg);
+    num = max(1, min(num, 5))
+
+    # Run that many times, call puppy
+    for i in range(0, num):
+        await puppy(ctx);
+
+
+@bot.command()
 async def puppy(ctx) -> None:
 
     # They're a bot for some reason? Die
