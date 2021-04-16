@@ -12,17 +12,17 @@ class PuppersAPI(FlickrPhotosAPI):
         self.random_errors = self.load_json(r"data/random_errors.json");
         self.random_ratings = self.load_json(r'data/rating_strings.json');
 
-    def load_json(self, uri):
+    def load_json(self, uri) -> object:
         with open(uri, 'r') as fp:
             return json.load(fp);
 
-    def random_rating(self, text):
+    def random_rating(self, text) -> str:
         return random.choice(self.random_ratings) % text;
 
-    def random_error(self):
+    def random_error(self) -> str:
         return random.choice(self.random_errors);
 
-    def random_pupper(self):
+    def random_pupper(self) -> str:
 
         # Aliases
         choice_terms = self.types;
