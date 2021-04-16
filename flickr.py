@@ -1,7 +1,14 @@
+#
+# @file   flickr.py
+# @brief  A minimal interface to the flickr search api.
+# @author ben <bwilliams@lincoln.ac.uk>
+#
+
 import requests
 import json
 import random
 import re
+import util
 
 class FlickrPhotosAPI:
 
@@ -11,18 +18,7 @@ class FlickrPhotosAPI:
         self.last_response = "";
         self.base_url = r"https://www.flickr.com/services/rest/?method=flickr.photos.search";
 
-    def get_kv_format(self, key, value):
-
-        # List? Return csv format
-        if isinstance(value, list):
-            return f"&{key}={','.join(value)}";
-
-        # Otherwise return normal format
-        else:
-            return f"&{key}={value}";
-
-
-    def get_search_result(self, url):
+    def get_search_result(self, url) -> str:
 
         # Fire the request, get response
         response = requests.get(url);
@@ -34,28 +30,36 @@ class FlickrPhotosAPI:
         # Otherwise:
         return response.text;
 
-    def to_flickr_url(self, item):
+    def to_flickr_url(self, item) -> str:
+
+        # Maps flickr img object to url according to the schema linked below.
+        # <https://www.flickr.com/services/api/misc.urls.html>
+        # ..
+        #  
         suffix = 'b';
         return f"https://live.staticflickr.com/{item['server']}/{item['id']}_{item['secret']}_{suffix}.jpg";
 
-    def remove_api_key(self, url):
+    def remove_api_key(self, url) -> str:
+
+        # Hide api_key for detailed error feedback without compromising your api use key
         return re.sub(r'\&api_key=(.+?)\&', '&api_key=<API_KEY>', url);
 
-    def random_search(self, tags, text):
+    def random_search(self, tags, text) -> str:
 
         # Start with the base
         url = self.base_url;
 
         # Add required params
-        url += self.get_kv_format("nojsoncallback", "1");
-        url += self.get_kv_format("api_key", self.key);
-        url += self.get_kv_format("tags", tags);
-        url += self.get_kv_format("text", text);
-        url += self.get_kv_format("format", "json");
-        url += self.get_kv_format("sort", "relevance")
-        url += self.get_kv_format("content_type", "1"); # photos
-        url += self.get_kv_format("per_page", "500");
+        url += util.get_kv_format("nojsoncallback", "1");
+        url += util.get_kv_format("api_key", self.key);
+        url += util.get_kv_format("tags", tags);
+        url += util.get_kv_format("text", text);
+        url += util.get_kv_format("format", "json");
+        url += util.get_kv_format("sort", "relevance")
+        url += util.get_kv_format("content_type", "1"); # photos
+        url += util.get_kv_format("per_page", "500");
 
+        # Print the url for debug purposes
         print(url);
 
         # And get the result

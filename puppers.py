@@ -1,20 +1,25 @@
-import random
-import json
-from flickr import FlickrPhotosAPI
+#
+# @file   puppers.py
+# @brief  Builds atop the flickr search api to search for random cute dogs.
+# @author ben <bwilliams@lincoln.ac.uk>
+#
 
+import random
+import util
+from flickr import FlickrPhotosAPI
 
 class PuppersAPI(FlickrPhotosAPI):
 
     def __init__(self, key):
-        super().__init__(key);
-        self.types = self.load_json(r"data/puppy_types.json");
-        self.required_terms = self.load_json(r"data/search_tags.json");
-        self.random_errors = self.load_json(r"data/random_errors.json");
-        self.random_ratings = self.load_json(r'data/rating_strings.json');
 
-    def load_json(self, uri) -> object:
-        with open(uri, 'r') as fp:
-            return json.load(fp);
+        # Call base constructor
+        super().__init__(key);
+
+        # Load all text data for use with bot
+        self.types           = util.load_json(r"data/puppy_types.json");
+        self.required_terms  = util.load_json(r"data/search_tags.json");
+        self.random_errors   = util.load_json(r"data/random_errors.json");
+        self.random_ratings  = util.load_json(r'data/rating_strings.json');
 
     def random_rating(self, text) -> str:
         return random.choice(self.random_ratings) % text;

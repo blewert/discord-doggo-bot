@@ -1,4 +1,18 @@
-# Ignore bot token & flickr key
-.token
-.flickr_api_key
-.owner_id
+# Ignore py cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+
+# Ignore secret files we don't want listed on github
+auth/.token
+auth/.flickr_api_key
+auth/.owner_id
+
+# It is worth noting that the above entries are not 
+# matched with a wildcard (e.g. auth/* or auth/**) 
+# because explicitly ignoring these specific files
+# informs the user of which files they need to create.
+#
+# If you intend on adding more hidden auth files for
+# future development, please keep this in mind
