@@ -1,2 +1,3 @@
-# Ignore bot token
+# Ignore bot token & flickr key
 .token
+.flickr_api_key
