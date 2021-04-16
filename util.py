@@ -23,12 +23,15 @@ def load_json(uri) -> object:
         return json.load(fp);
 
 
+def markdown_code_teletype(text):
+    return f"```py\n{text}\n```";
+
+
 def get_token_from_file(filename) -> str:
 
     # No file? Die:
     if not os.path.isfile(filename):
-        raise FileNotFoundError(
-            f"Couldn't find {filename} (token for discord bot).")
+        raise FileNotFoundError(f"Couldn't find {filename} (token for discord bot).")
 
     # File? cool, strip, return:
     with open(filename, 'r') as f:

@@ -66,7 +66,7 @@ async def puppy(ctx) -> None:
 
         # Otherwise.. an error
         await ctx.send(puppy_api.random_error());
-        await ctx.send(f"```\n{puppy_api.last_url}\n{puppy_api.last_response[:200]}\n```");
+        await ctx.send(util.markdown_code_teletype(f"{puppy_api.last_url}\n{puppy_api.last_response[:200]}"));
 
 
 @bot.command()
@@ -74,7 +74,7 @@ async def quit(ctx) -> None:
 
     # Not the owner? Get out of town
     if str(ctx.author.id) != owner_id:
-        return await ctx.send("Nice try");
+        return await ctx.send(f"Nice try, {ctx.author.name}");
 
     # Otherwise:
     print("Quit command found! Closing!");
